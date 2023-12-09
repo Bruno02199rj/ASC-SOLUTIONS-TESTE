@@ -1,4 +1,5 @@
 ﻿using ApiAuth.Data;
+using ApiAuth.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
@@ -21,8 +22,14 @@ namespace ApiAuth.Controllers
         }
         //VERIFICAR SE O USUARIO ESTA LOGADO
 
-   
-       
+        [HttpPost("cadastrar")]
+
+        public async Task<IActionResult> Cadastrar(Users input)
+        {
+             _context.Users.Add(input);
+            _context.SaveChanges();
+            return Ok(new { Id = input.Id,Name=input.Name,Username = input.Username, Password=input.Password});
+        }
 
         [HttpPost]
         public async Task<IActionResult> Logar(string username,string senha)
@@ -33,31 +40,13 @@ namespace ApiAuth.Controllers
             
             
 
-            sqliteCommand.CommandText = $"SELECT * FROM Users WHERE Username = '{username}'AND Password = '{senha}'";
+            sqliteCommand.CommandText = $"SELECT * FROM Users WHERE Username ='{username}'AND Password = '{senha}'";
 
             SqliteDataReader reader = sqliteCommand.ExecuteReader();
 
 
             if (await reader.ReadAsync())
             {
-
-                int usuarioId = reader.GetInt32(0);
-                string nome = reader.GetString(1);
-
-                List<Claim> direitosAcesso = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier,usuarioId.ToString()),
-                    new Claim(ClaimTypes.Name,nome)
-                };
-
-                var identity = new ClaimsIdentity(direitosAcesso, "Identity.Login");
-                var userPrincipal = new ClaimsPrincipal(new[] { identity });
-
-                await HttpContext.SignInAsync(userPrincipal,
-                    new AuthenticationProperties
-                    {
-                        IsPersistent = false
-                    });
                 return Json(new { Msg = "logado" });
             }
             return Json(new { Msg = "não encontrado" });
