@@ -125,3 +125,4 @@ C:\Users\bruno\Source\Repos\ApiAuth\ApiAuth\obj\Debug\net8.0\refint\ApiAuth.dll
 C:\Users\bruno\Source\Repos\ApiAuth\ApiAuth\obj\Debug\net8.0\ApiAuth.pdb
 C:\Users\bruno\Source\Repos\ApiAuth\ApiAuth\obj\Debug\net8.0\ApiAuth.genruntimeconfig.cache
 C:\Users\bruno\Source\Repos\ApiAuth\ApiAuth\obj\Debug\net8.0\ref\ApiAuth.dll
+C:\Users\bruno\Source\Repos\ApiAuth\ApiAuth\obj\Debug\net8.0\ApiAuth.sourcelink.json

@@ -11,6 +11,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     //builder.cofiguration and not just configuration
     options.UseSqlite(builder.Configuration.GetConnectionString("Default"));
 });
+builder.Services.AddAuthentication("Identity.Login")
+    .AddCookie("Identify.Login", config =>
+    {
+        config.Cookie.Name = "Identity.Login";
+        config.LoginPath = "/Login";
+        config.AccessDeniedPath = "/Home";
+       
+    });
 builder.Services.AddConnections();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -29,6 +37,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 
